@@ -2,8 +2,9 @@
   <h1>Zero Trust Network Architecture for SMB</h1>
   
   <p>
-    <img src="https://img.shields.io/github/actions/workflow/status/careed23/Zero-Trust-Network-Architecture/validate-configs.yml?branch=main" alt="GitHub workflow status" />
-    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License" />
+    <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white" alt="Python" />
+    <img src="https://img.shields.io/badge/Shell_Script-121011?style=flat&logo=gnu-bash&logoColor=white" alt="Shell Script" />
+    <img src="https://img.shields.io/badge/Cloud_Architecture-005571?style=flat" alt="Cloud Architecture" />
   </p>
 </div>
 
