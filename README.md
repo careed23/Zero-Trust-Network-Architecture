@@ -73,6 +73,8 @@ graph TD
     EntraID -.->|Audit Logs| Wazuh
 ```
 
+*(If the Mermaid diagram above does not render, please view the [Architecture Diagram Image](docs/diagrams/zero-trust-architecture.png))*
+
 ## 🛠️ Technology Stack
 - **Internet Edge:** Cloudflare (WAF, DDoS Protection, Bot Management)
 - **Firewall & Routing:** pfSense / OPNsense (VLAN Segmentation, L4/L7 Filtering)
