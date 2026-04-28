@@ -1,0 +1,46 @@
+name: Validate Configurations
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Validate JSON Files
+        run: |
+          # Finds all json files and validates them
+          find . -name "*.json" -o -name "*.hujson" | while read file; do
+            # Using jq to validate syntax
+            # Note: hujson (Human JSON) supports comments, jq might fail on comments
+            # but we strip comments using grep as a basic workaround, or rely on native json.
+            # In our repo, we use standard JSON for entra and hujson for tailscale.
+            echo "Validating $file"
+            if [[ $file == *.hujson ]]; then
+              echo "Skipping strict jq validation for hujson, checking for basic structure."
+              cat "$file" | grep -q "{" || exit 1
+            else
+              jq empty "$file" || exit 1
+            fi
+          done
+
+      - name: Validate Markdown Formatting
+        run: |
+          # Basic check to ensure markdown files exist and have content
+          if [ ! -s "README.md" ]; then
+            echo "README.md is empty or missing"
+            exit 1
+          fi
+          
+      - name: Syntax Check Python Scripts
+        run: |
+          python -m py_compile scripts/trust_zone_health_check.py
+
+      - name: Shellcheck for Bash Scripts
+        run: |
+          shellcheck scripts/deploy_wazuh_agent.sh

@@ -1,0 +1,32 @@
+{
+  "displayName": "Require MFA for All Users",
+  "state": "enabled",
+  "conditions": {
+    "users": {
+      "includeUsers": ["All"],
+      "excludeUsers": ["BreakGlass_Admin_DO_NOT_DELETE"]
+    },
+    "applications": {
+      "includeApplications": ["All"]
+    },
+    "clientAppTypes": [
+      "all"
+    ],
+    "locations": {
+      "includeLocations": ["All"]
+    }
+  },
+  "grantControls": {
+    "operator": "OR",
+    "builtInControls": [
+      "mfa"
+    ]
+  },
+  "sessionControls": {
+    "signInFrequency": {
+      "value": 1,
+      "type": "days",
+      "isEnabled": true
+    }
+  }
+}

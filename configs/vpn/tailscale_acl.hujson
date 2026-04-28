@@ -1,0 +1,45 @@
+// Tailscale Zero Trust ACL Policy
+// This configuration enforces principle of least privilege across the overlay network.
+// "Never Trust, Always Verify": By default, everything is blocked.
+{
+  "groups": {
+    "group:admins": ["alice@example.com", "bob@example.com"],
+    "group:employees": ["charlie@example.com", "diana@example.com"]
+  },
+  "tagOwners": {
+    "tag:server-dmz": ["group:admins"],
+    "tag:server-internal": ["group:admins"],
+    "tag:mgmt": ["group:admins"]
+  },
+  "acls": [
+    // Admins can access all management interfaces and servers
+    {
+      "action": "accept",
+      "src": ["group:admins"],
+      "dst": ["tag:mgmt:*", "tag:server-dmz:*", "tag:server-internal:*"]
+    },
+    // Employees can access internal applications on specific ports (e.g., 443)
+    {
+      "action": "accept",
+      "src": ["group:employees"],
+      "dst": ["tag:server-internal:443"]
+    },
+    // DMZ servers can only reply to established connections; they cannot initiate to internal
+    // (Implied by default deny rule of Tailscale)
+    // Internal servers can query specific management or SIEM servers
+    {
+      "action": "accept",
+      "src": ["tag:server-internal", "tag:server-dmz"],
+      "dst": ["tag:mgmt:514"] // e.g., Syslog to Wazuh
+    }
+  ],
+  // SSH configuration: require re-authentication for admin SSH
+  "ssh": [
+    {
+      "action": "check",
+      "src": ["group:admins"],
+      "dst": ["tag:server-dmz", "tag:server-internal", "tag:mgmt"],
+      "users": ["root", "admin"]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+graph TD
+    classDef untrusted fill:#fcdbdb,stroke:#c00000,stroke-width:2px;
+    classDef edge fill:#fff4ce,stroke:#d6b656,stroke-width:2px,stroke-dasharray: 5 5;
+    classDef verify fill:#e1d5e7,stroke:#9673a6,stroke-width:2px;
+    classDef secure fill:#d5e8d4,stroke:#82b366,stroke-width:2px;
+    classDef siem fill:#dae8fc,stroke:#6c8ebf,stroke-width:2px;
+
+    Internet((Internet)):::untrusted
+    RemoteUser["Remote Employee"]:::untrusted
+    
+    subgraph IdentityZone ["Identity & Access (Zero Trust Control Plane)"]
+        EntraID["Entra ID (Azure AD)<br/>Identity & MFA Enforcer"]:::verify
+        Tailscale["Tailscale / WireGuard<br/>ZTNA Overlay"]:::verify
+    end
+
+    subgraph EdgeZone ["Internet Edge"]
+        CF["Cloudflare WAF<br/>DDoS & Bot Mitigation"]:::edge
+    end
+
+    subgraph NetworkPerimeter ["Local Network Boundaries"]
+        FW["pfSense / OPNsense Firewall<br/>VLAN Routing & ACLs"]:::verify
+    end
+
+    subgraph Segments ["Micro-Segmented Environment"]
+        DMZ["DMZ VLAN<br/>Public Services"]:::secure
+        CorpLAN["Corporate VLAN<br/>Endpoint Policy Zone"]:::secure
+        MgmtVLAN["Management VLAN<br/>Strict Access"]:::secure
+        IoTVLAN["IoT VLAN<br/>Isolated, No Internet out"]:::untrusted
+    end
+
+    subgraph SecOps ["Security Operations"]
+        Wazuh["Wazuh SIEM<br/>Log Aggregation & XDR"]:::siem
+    end
+
+    %% Data flows
+    RemoteUser -->|1. Auth & MFA| EntraID
+    RemoteUser -->|2. Web Traffic| CF
+    RemoteUser -->|3. Overlay Tunnel| Tailscale
+
+    CF -->|Filtered HTTP/S| DMZ
+    
+    Tailscale -.->|Authorized Traffic Only<br/>"Never Trust, Always Verify"| CorpLAN
+    Tailscale -.->|Admin Only| MgmtVLAN
+
+    FW --- DMZ
+    FW --- CorpLAN
+    FW --- MgmtVLAN
+    FW --- IoTVLAN
+
+    CorpLAN -.->|Device Telemetry| Wazuh
+    FW -.->|Syslog / NetFlow| Wazuh
+    EntraID -.->|Audit Logs| Wazuh

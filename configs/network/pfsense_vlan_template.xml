@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<pfsense>
+  <!-- 
+    pfSense Zero Trust VLAN Configuration Template
+    
+    This template outlines the logical interfaces and VLAN definitions 
+    used to create isolated trust zones. In a Zero Trust model, 
+    routing between these VLANs is denied by default and requires 
+    explicit firewall rules (not shown here for brevity).
+  -->
+  <vlans>
+    <vlan>
+      <if>igb1</if>
+      <tag>10</tag>
+      <pcp>0</pcp>
+      <descr><![CDATA[DMZ - Public Facing Services]]></descr>
+      <vlanif>igb1.10</vlanif>
+    </vlan>
+    <vlan>
+      <if>igb1</if>
+      <tag>20</tag>
+      <pcp>0</pcp>
+      <descr><![CDATA[Corporate LAN - Endpoint Policy Enforcement Zone]]></descr>
+      <vlanif>igb1.20</vlanif>
+    </vlan>
+    <vlan>
+      <if>igb1</if>
+      <tag>30</tag>
+      <pcp>0</pcp>
+      <descr><![CDATA[Management - Strict Access / Admin Only]]></descr>
+      <vlanif>igb1.30</vlanif>
+    </vlan>
+    <vlan>
+      <if>igb1</if>
+      <tag>40</tag>
+      <pcp>0</pcp>
+      <descr><![CDATA[IoT - Isolated / No Internet Egress]]></descr>
+      <vlanif>igb1.40</vlanif>
+    </vlan>
+  </vlans>
+  <interfaces>
+    <opt1>
+      <if>igb1.10</if>
+      <descr><![CDATA[DMZ]]></descr>
+      <enable></enable>
+      <spoofmac></spoofmac>
+      <ipaddr>10.0.10.1</ipaddr>
+      <subnet>24</subnet>
+    </opt1>
+    <opt2>
+      <if>igb1.20</if>
+      <descr><![CDATA[CORPLAN]]></descr>
+      <enable></enable>
+      <spoofmac></spoofmac>
+      <ipaddr>10.0.20.1</ipaddr>
+      <subnet>24</subnet>
+    </opt2>
+    <opt3>
+      <if>igb1.30</if>
+      <descr><![CDATA[MGMT]]></descr>
+      <enable></enable>
+      <spoofmac></spoofmac>
+      <ipaddr>10.0.30.1</ipaddr>
+      <subnet>24</subnet>
+    </opt3>
+    <opt4>
+      <if>igb1.40</if>
+      <descr><![CDATA[IOT]]></descr>
+      <enable></enable>
+      <spoofmac></spoofmac>
+      <ipaddr>10.0.40.1</ipaddr>
+      <subnet>24</subnet>
+    </opt4>
+  </interfaces>
+</pfsense>
