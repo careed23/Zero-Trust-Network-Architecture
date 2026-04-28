@@ -81,6 +81,12 @@ graph TD
 *(If the Mermaid diagram above does not render, please view the [Architecture Diagram Image](docs/diagrams/zero-trust-architecture.png))*
 
 ## 🛠️ Technology Stack
+![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=flat&logo=cloudflare&logoColor=white)
+![pfSense](https://img.shields.io/badge/pfSense-000000?style=flat&logo=pfsense&logoColor=white)
+![Entra ID](https://img.shields.io/badge/Entra_ID-0072C6?style=flat&logo=microsoftazure&logoColor=white)
+![Tailscale](https://img.shields.io/badge/Tailscale-FFFFFF?style=flat&logo=tailscale&logoColor=black)
+![Wazuh](https://img.shields.io/badge/Wazuh-0071C5?style=flat&logo=wazuh&logoColor=white)
+
 - **Internet Edge:** Cloudflare (WAF, DDoS Protection, Bot Management)
 - **Firewall & Routing:** pfSense / OPNsense (VLAN Segmentation, L4/L7 Filtering)
 - **Identity Provider (IdP):** Entra ID / Azure AD (SSO, Conditional Access, MFA)
