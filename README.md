@@ -1,6 +1,6 @@
 # Zero Trust Network Architecture for SMB
 
-![GitHub workflow status](https://img.shields.io/github/actions/workflow/status/your-username/zero-trust-smb-architecture/validate-configs.yml?branch=main)
+![GitHub workflow status](https://img.shields.io/github/actions/workflow/status/careed23/Zero-Trust-Network-Architecture/validate-configs.yml?branch=main)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
 A comprehensive, production-inspired repository demonstrating how to implement a Zero Trust Network Architecture (ZTNA) for a Small-to-Medium Business (SMB). This project is designed as a portfolio piece to showcase real enterprise-grade security thinking, focusing on the principle of **"Never Trust, Always Verify."**
