@@ -56,3 +56,13 @@ To prevent lateral movement, the internal network is divided into isolated VLANs
 3. pfSense firewall drops the traffic because IoT VLAN has a strict "Deny All" outbound rule.
 4. Wazuh detects the anomalous port scanning via network flow logs and raises a critical alert.
 5. The threat is contained entirely within the isolated IoT segment.
+
+---
+
+## Lessons Learned & Design Decisions
+
+When building this architecture, I made several deliberate choices to optimize for an SMB environment:
+
+- **Tailscale over Traditional IPsec/SSL VPNs:** I chose Tailscale because managing complex firewall rules, NAT traversals, and certificate authorities for a traditional VPN is a massive overhead for a small team. Tailscale uses WireGuard under the hood, is instantly deployable, natively integrates with Entra ID, and handles NAT traversal seamlessly. This allowed me to focus purely on enforcing least privilege rather than wrestling with network connectivity.
+- **Wazuh over Splunk:** While Splunk is the industry heavyweight, its pricing model is prohibitive for most SMBs. Wazuh gives us a free, open-source XDR and SIEM solution out-of-the-box. More importantly, the Wazuh agent handles file integrity monitoring, vulnerability detection, and log forwarding all in one, which drastically reduces the endpoint footprint.
+- **Micro-segmentation from Day 1:** Rather than a flat network, creating distinct DMZ, CorpLAN, Mgmt, and IoT VLANs upfront saves monumental headaches later. IoT devices are notoriously chatty and insecure, so throwing them into a black-hole VLAN (VLAN 40) is one of the highest ROI security controls an SMB can implement.
