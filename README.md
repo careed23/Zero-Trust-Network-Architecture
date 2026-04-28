@@ -60,7 +60,7 @@ graph TD
 
     CF -->|Filtered HTTP/S| DMZ
     
-    Tailscale -.->|Authorized Traffic Only<br/>"Never Trust, Always Verify"| CorpLAN
+    Tailscale -.->|Authorized Traffic Only<br/>'Never Trust, Always Verify'| CorpLAN
     Tailscale -.->|Admin Only| MgmtVLAN
 
     FW --- DMZ
