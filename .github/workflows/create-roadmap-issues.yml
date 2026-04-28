@@ -1,0 +1,29 @@
+name: Setup Roadmap Issues
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-issues:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Create Terraform IaC Issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create --title "Roadmap: Add Terraform IaC for Azure deployment" \
+                          --body "We need to automate the deployment of our Azure AD/Entra ID resources and underlying network infrastructure using Terraform/OpenTofu." \
+                          --label "enhancement,roadmap" || echo "Issue may already exist."
+
+      - name: Create Wazuh Dashboard Issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create --title "Roadmap: Add Wazuh dashboard screenshot" \
+                          --body "To improve the visual appeal of the portfolio, we should deploy the stack locally and grab a screenshot of the Wazuh dashboard showing blocked lateral movement." \
+                          --label "documentation,roadmap" || echo "Issue may already exist."
