@@ -20,11 +20,11 @@ We leverage open-source or affordable solutions that an SMB can realistically de
 
 ```mermaid
 graph TD
-    classDef untrusted fill:#fcdbdb,stroke:#c00000,stroke-width:2px;
-    classDef edge fill:#fff4ce,stroke:#d6b656,stroke-width:2px,stroke-dasharray: 5 5;
-    classDef verify fill:#e1d5e7,stroke:#9673a6,stroke-width:2px;
-    classDef secure fill:#d5e8d4,stroke:#82b366,stroke-width:2px;
-    classDef siem fill:#dae8fc,stroke:#6c8ebf,stroke-width:2px;
+    classDef untrusted fill:#fcdbdb,stroke:#c00000,stroke-width:2px,color:#000;
+    classDef edge fill:#fff4ce,stroke:#d6b656,stroke-width:2px,stroke-dasharray: 5 5,color:#000;
+    classDef verify fill:#e1d5e7,stroke:#9673a6,stroke-width:2px,color:#000;
+    classDef secure fill:#d5e8d4,stroke:#82b366,stroke-width:2px,color:#000;
+    classDef siem fill:#dae8fc,stroke:#6c8ebf,stroke-width:2px,color:#000;
 
     Internet((Internet)):::untrusted
     RemoteUser["Remote Employee"]:::untrusted
